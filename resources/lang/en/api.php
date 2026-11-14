@@ -24,6 +24,9 @@ return [
         'loaded' => 'Content loaded successfully.',
         'not_found' => 'The requested content was not found.',
     ],
+    'car_types' => [
+        'loaded' => 'Car types loaded successfully.',
+    ],
     'errors' => [
         'forbidden' => 'You are not authorized to perform this action.',
         'not_found' => 'The requested resource was not found.',
@@ -32,6 +35,10 @@ return [
     ],
     'notifications' => [
         'updated' => 'Notification preferences were updated.',
+    ],
+    'orders' => [
+        'created' => 'Order created successfully.',
+        'price_calculated' => 'Suggested price calculated successfully.',
     ],
     'profile' => [
         'loaded' => 'Profile data loaded successfully.',

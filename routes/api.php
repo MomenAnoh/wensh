@@ -1,8 +1,10 @@
 <?php
 
 use App\Http\Controllers\Api\User\AuthController;
+use App\Http\Controllers\Api\User\CarTypeController;
 use App\Http\Controllers\Api\User\ContentController;
 use App\Http\Controllers\Api\User\NotificationPreferenceController;
+use App\Http\Controllers\Api\User\OrderController;
 use App\Http\Controllers\Api\User\ProfileController;
 use App\Http\Middleware\SetApiLocale;
 use Illuminate\Support\Facades\Route;
@@ -32,7 +34,15 @@ Route::middleware(SetApiLocale::class)
             Route::get('/about-us', 'aboutUs')->name('about-us');
         });
 
+        Route::get('/car-types', [CarTypeController::class, 'index'])->name('car-types.index');
+
         Route::middleware('auth:api')->group(function (): void {
+            Route::prefix('order')->name('order.')->group(function (): void {
+                Route::post('/', [OrderController::class, 'store'])->name('store');
+                Route::post('/calc-suggested-price', [OrderController::class, 'calcSuggestedPrice'])
+                    ->name('calc-suggested-price');
+            });
+
             Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
             Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
             Route::post('/profile/skip', [ProfileController::class, 'skip'])->name('profile.skip');
