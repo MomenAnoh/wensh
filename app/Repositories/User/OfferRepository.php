@@ -17,6 +17,7 @@ class OfferRepository
         $fees = $order->app_fee;
 
        $offer = OrderOffer::query()->create([
+            'user_id' => $order->user_id,
             'order_id' => $order->id,
             'made_from' => UserTypes::User,
             'price' => $price,

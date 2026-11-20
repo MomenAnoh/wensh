@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f5f7fb">
+    <title>العروض الواردة</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <main class="page-shell">
+        <header class="page-header">
+            <a class="brand" href="/" aria-label="الرئيسية">
+                <span class="brand-mark" aria-hidden="true">و</span>
+                <span>وِنش</span>
+            </a>
+            <div class="connection-pill" id="connection-status" data-state="offline">
+                <span class="status-dot" aria-hidden="true"></span>
+                <span id="connection-label">غير متصل</span>
+            </div>
+        </header>
+
+        <section class="intro">
+            <p class="eyebrow">مركز العروض</p>
+            <h1>العروض الواردة</h1>
+            <p class="intro-copy">تظهر هنا العروض التي تصل مباشرة من السيرفر.</p>
+        </section>
+
+        <section class="panel" aria-labelledby="offers-title">
+            <form class="room-form" id="room-form">
+                <label for="user-id">معرف المستخدم</label>
+                <div class="room-controls">
+                    <input id="user-id" name="user-id" type="text" inputmode="numeric" autocomplete="off" placeholder="مثال: 12" required>
+                    <button type="submit" id="connect-button">اتصال وعرض العروض</button>
+                </div>
+                <p class="form-hint">سيتم الاستماع إلى الغرفة الخاصة بالمستخدم على السيرفر.</p>
+            </form>
+
+            <div class="offers-heading">
+                <div>
+                    <h2 id="offers-title">العروض</h2>
+                    <p id="room-label">أدخل معرف المستخدم لبدء الاستماع.</p>
+                </div>
+                <span class="offer-count" id="offer-count">0</span>
+            </div>
+
+            <div class="offers-list" id="offers-list" aria-live="polite">
+                <div class="empty-state" id="empty-state">
+                    <span class="empty-icon" aria-hidden="true">↙</span>
+                    <strong>بانتظار أول عرض</strong>
+                    <span>ستظهر العروض الجديدة هنا فور وصولها.</span>
+                </div>
+            </div>
+        </section>
+        <footer>تحديث مباشر عبر اتصال السيرفر</footer>
+    </main>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/app.js"></script>
+</body>
+</html>

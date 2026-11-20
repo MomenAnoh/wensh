@@ -1,11 +1,15 @@
 import express from 'express';
 import http from 'http';
+import path from 'path';
+import { fileURLToPath } from 'url';
 import { Server } from 'socket.io';
 
 const app = express();
 const server = http.createServer(app);
+const directoryName = path.dirname(fileURLToPath(import.meta.url));
 
 app.use(express.json());
+app.use(express.static(path.join(directoryName, 'public')));
 
 const io = new Server(server, {
     cors: {
@@ -33,12 +37,13 @@ app.post('/send-event', (req, res) => {
     const { room, event, data } = req.body;
 
     if (!room || !event) {
+
         return res.status(400).json({
             success: false,
             message: 'Room and event are required'
         });
     }
-
+ console.log(`Sending event: ${event} to room: ${room} with data:`, data);
     io.to(room).emit(event, data);
 
     return res.json({

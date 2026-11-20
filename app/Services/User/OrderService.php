@@ -3,7 +3,6 @@
 namespace App\Services\User;
 
 use App\Enums\OrderStatus;
-use App\Events\OrderCreated;
 use App\Models\Order;
 use App\Models\Setting;
 use App\Models\User;
@@ -12,7 +11,7 @@ use App\Repositories\User\OrderRepository;
 
 class OrderService
 {
-    protected $setting;
+    private ?Setting $setting;
 
     public function __construct(
         private readonly OrderRepository $orderRepository,
@@ -23,10 +22,13 @@ class OrderService
 
     public function create(User $user, array $data): Order
     {
+        $appFee = (float) ($this->setting?->app_fee ?? 0);
+
         $data['user_id'] = $user->id;
-        $data['app_fee'] = $this->setting->app_fee??0;
-        $data['suggested_price'] = $this->calcSuggestedPrice($data);
-        $finalPrice =$this->setting->app_fee >0 ? $data['price'] + ($data['price'] * $this->setting->app_fee??0 / 100) : $data['price'];
+        $data['app_fee'] = $appFee;
+        $suggestedPrice = $this->calcSuggestedPrice($data);
+        $data['suggested_price'] = $suggestedPrice['suggested_price'];
+        $finalPrice = $data['price'] + ($data['price'] * $appFee / 100);
         $data['final_price'] = $finalPrice;
         $data['status'] = OrderStatus::Pending;
 
@@ -34,24 +36,31 @@ class OrderService
 
         $this->offerRepository->createOffer($order, $user, $finalPrice);
 
-
-
         return $order;
     }
 
-    public function calcSuggestedPrice($data)
+    /**
+     * @param  array{from_latitude: float|int|string, from_longitude: float|int|string, to_latitude: float|int|string, to_longitude: float|int|string}  $data
+     * @return array{suggested_price: float, tax_fee: float}
+     */
+    public function calcSuggestedPrice(array $data): array
     {
-        $km_price = $this->setting->km_price??0;
-        $km_count = $this->calculateDistance($data['from_latitude'], $data['from_longitude'], $data['to_latitude'], $data['to_longitude']);
-        $suggestedPrice = $km_count * $km_price;
-        $data = [
-            'suggested_price' => round($suggestedPrice, 2),
-'tax_fee' => $this->setting?->app_fee ?? 0,        ];
+        $kmPrice = (float) ($this->setting?->km_price ?? 0);
+        $kmCount = $this->calculateDistance(
+            (float) $data['from_latitude'],
+            (float) $data['from_longitude'],
+            (float) $data['to_latitude'],
+            (float) $data['to_longitude'],
+        );
+        $suggestedPrice = $kmCount * $kmPrice;
 
-        return $data;
+        return [
+            'suggested_price' => round($suggestedPrice, 2),
+            'tax_fee' => (float) ($this->setting?->app_fee ?? 0),
+        ];
     }
 
-    public function calculateDistance($lat1, $lon1, $lat2, $lon2)
+    public function calculateDistance(float $lat1, float $lon1, float $lat2, float $lon2): float
     {
         $earthRadius = 6371;
 

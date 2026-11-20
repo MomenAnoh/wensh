@@ -11,6 +11,7 @@ class OrderRepository
      */
     public function create(array $attributes): Order
     {
+        
         return Order::query()->create($attributes);
     }
 }
