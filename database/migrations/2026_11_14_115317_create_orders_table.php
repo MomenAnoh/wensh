@@ -23,10 +23,12 @@ return new class extends Migration
             $table->string('status')->default('pending');
             $table->date('scheduled_day')->nullable();
             $table->time('scheduled_time')->nullable();
-            $table->json('payment_methods');
+            $table->string('payment_methods');
             $table->decimal('suggested_price', 10, 2)->nullable();
             $table->decimal('discount', 10, 2)->default(0);
             $table->decimal('app_fee', 10, 2)->default(0);
+            $table->decimal('price', 10, 2);
+
             $table->decimal('final_price', 10, 2);
             $table->timestamps();
         });

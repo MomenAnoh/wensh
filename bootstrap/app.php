@@ -54,13 +54,13 @@ return Application::configure(basePath: dirname(__DIR__))
             return ApiResponse::error($message, $exception->getStatusCode());
         });
 
-        $exceptions->render(function (Throwable $exception, Request $request) {
-            if (! $request->is('api/*')) {
-                return null;
-            }
+        // $exceptions->render(function (Throwable $exception, Request $request) {
+        //     if (! $request->is('api/*')) {
+        //         return null;
+        //     }
 
-            return ApiResponse::error(__('api.errors.server_error'), 500);
-        });
+        //     return ApiResponse::error(__('api.errors.server_error'), 500);
+        // });
 
         $exceptions->shouldRenderJsonWhen(
             fn (Request $request) => $request->is('api/*') || $request->expectsJson(),

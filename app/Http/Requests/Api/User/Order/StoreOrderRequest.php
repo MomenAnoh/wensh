@@ -32,7 +32,7 @@ class StoreOrderRequest extends FormRequest
             'type' => ['required', 'string', Rule::in(['normal', 'scheduled'])],
             'scheduled_day' => ['required_if:type,scheduled', 'nullable', 'date', 'after_or_equal:today'],
             'scheduled_time' => ['required_if:type,scheduled', 'nullable', 'date_format:H:i'],
-            'payment_methods' => ['required', 'array', 'min:1'],
+            'payment_methods' => ['required'],
             'price' => ['required', 'numeric', 'min:0'],
         ];
     }

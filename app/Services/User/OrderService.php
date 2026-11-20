@@ -3,41 +3,50 @@
 namespace App\Services\User;
 
 use App\Enums\OrderStatus;
+use App\Events\OrderCreated;
 use App\Models\Order;
 use App\Models\Setting;
 use App\Models\User;
+use App\Repositories\User\OfferRepository;
 use App\Repositories\User\OrderRepository;
 
 class OrderService
 {
     protected $setting;
 
-    public function __construct(private readonly OrderRepository $orderRepository)
-    {
+    public function __construct(
+        private readonly OrderRepository $orderRepository,
+        private readonly OfferRepository $offerRepository,
+    ) {
         $this->setting = Setting::first();
     }
 
     public function create(User $user, array $data): Order
     {
         $data['user_id'] = $user->id;
-        $data['app_fee_id'] = $this->setting->app_fee;
+        $data['app_fee'] = $this->setting->app_fee??0;
         $data['suggested_price'] = $this->calcSuggestedPrice($data);
-        $finalPrice = $data['price'] + ($data['price'] * $this->setting->app_fee / 100);
+        $finalPrice =$this->setting->app_fee >0 ? $data['price'] + ($data['price'] * $this->setting->app_fee??0 / 100) : $data['price'];
         $data['final_price'] = $finalPrice;
         $data['status'] = OrderStatus::Pending;
-        return $this->orderRepository->create([$data]);
+
+        $order = $this->orderRepository->create($data);
+
+        $this->offerRepository->createOffer($order, $user, $finalPrice);
+
+
+
+        return $order;
     }
 
     public function calcSuggestedPrice($data)
     {
-        $km_price = $this->setting->km_price;
+        $km_price = $this->setting->km_price??0;
         $km_count = $this->calculateDistance($data['from_latitude'], $data['from_longitude'], $data['to_latitude'], $data['to_longitude']);
         $suggestedPrice = $km_count * $km_price;
-        $data=[
+        $data = [
             'suggested_price' => round($suggestedPrice, 2),
-             'tax_fee' => (float)$this->setting->app_fee
-        ];
-
+'tax_fee' => $this->setting?->app_fee ?? 0,        ];
 
         return $data;
     }

@@ -22,6 +22,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
     'suggested_price',
     'discount',
     'app_fee',
+    'price',
     'final_price',
 ])]
 class Order extends Model
@@ -31,10 +32,10 @@ class Order extends Model
         return [
             'status' => OrderStatus::class,
             'scheduled_day' => 'date',
-            'payment_methods' => 'array',
-            'suggested_price' => 'decimal:2',
+             'suggested_price' => 'decimal:2',
             'discount' => 'decimal:2',
             'app_fee' => 'decimal:2',
+            'price' => 'decimal:2',
             'final_price' => 'decimal:2',
         ];
     }
