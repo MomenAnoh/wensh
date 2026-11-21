@@ -24,6 +24,11 @@ return [
         'loaded' => 'Content loaded successfully.',
         'not_found' => 'The requested content was not found.',
     ],
+    'driver' => [
+        'invalid_credentials' => 'The phone number or password is incorrect.',
+        'logged_in' => 'Driver signed in successfully.',
+        'registered' => 'Driver registered successfully.',
+    ],
     'car_types' => [
         'loaded' => 'Car types loaded successfully.',
     ],
@@ -37,7 +42,10 @@ return [
         'updated' => 'Notification preferences were updated.',
     ],
     'orders' => [
+        'accepted' => 'Offer accepted and order prices updated successfully.',
+        'counter_offer_sent' => 'Counter offer sent to the driver successfully.',
         'created' => 'Order created successfully.',
+        'offer_sent' => 'Offer sent to the customer successfully.',
         'price_calculated' => 'Suggested price calculated successfully.',
     ],
     'profile' => [

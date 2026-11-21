@@ -5,9 +5,12 @@ use App\Http\Controllers\Api\User\CarTypeController;
 use App\Http\Controllers\Api\User\ContentController;
 use App\Http\Controllers\Api\User\NotificationPreferenceController;
 use App\Http\Controllers\Api\User\OrderController;
+use App\Http\Controllers\Api\User\OrderOfferController;
 use App\Http\Controllers\Api\User\ProfileController;
 use App\Http\Middleware\SetApiLocale;
 use Illuminate\Support\Facades\Route;
+
+require __DIR__.'/api/driver.php';
 
 Route::middleware(SetApiLocale::class)
     ->prefix('v1/user')
@@ -39,6 +42,8 @@ Route::middleware(SetApiLocale::class)
         Route::middleware('auth:api')->group(function (): void {
             Route::prefix('order')->name('order.')->group(function (): void {
                 Route::post('/', [OrderController::class, 'store'])->name('store');
+                Route::post('/offers', [OrderOfferController::class, 'storeCounterOffer'])
+                    ->name('offers.store-counter');
                 Route::post('/calc-suggested-price', [OrderController::class, 'calcSuggestedPrice'])
                     ->name('calc-suggested-price');
             });

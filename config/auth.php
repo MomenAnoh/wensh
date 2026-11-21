@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\User;
+use App\Models\Wensh;
 
 return [
 
@@ -46,6 +47,10 @@ return [
             'driver' => 'jwt',
             'provider' => 'users',
         ],
+        'wensh' => [
+            'driver' => 'jwt',
+            'provider' => 'wenshes',
+        ],
     ],
 
     /*
@@ -69,6 +74,10 @@ return [
         'users' => [
             'driver' => 'eloquent',
             'model' => env('AUTH_MODEL', User::class),
+        ],
+        'wenshes' => [
+            'driver' => 'eloquent',
+            'model' => Wensh::class,
         ],
 
         // 'users' => [

@@ -30,6 +30,7 @@ class OrderResource extends JsonResource
             'discount' => $this->discount,
             'app_fee' => $this->app_fee,
             'final_price' => $this->final_price,
+            'offers' => OrderOfferResource::collection($this->whenLoaded('offers')),
         ];
     }
 }

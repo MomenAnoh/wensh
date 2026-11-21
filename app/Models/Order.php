@@ -6,6 +6,7 @@ use App\Enums\OrderStatus;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 #[Fillable([
     'user_id',
@@ -32,7 +33,7 @@ class Order extends Model
         return [
             'status' => OrderStatus::class,
             'scheduled_day' => 'date',
-             'suggested_price' => 'decimal:2',
+            'suggested_price' => 'decimal:2',
             'discount' => 'decimal:2',
             'app_fee' => 'decimal:2',
             'price' => 'decimal:2',
@@ -48,5 +49,10 @@ class Order extends Model
     public function carType(): BelongsTo
     {
         return $this->belongsTo(CarType::class);
+    }
+
+    public function offers(): HasMany
+    {
+        return $this->hasMany(OrderOffer::class);
     }
 }

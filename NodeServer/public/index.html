@@ -28,7 +28,12 @@
 
         <section class="panel" aria-labelledby="offers-title">
             <form class="room-form" id="room-form">
-                <label for="user-id">معرف المستخدم</label>
+                <label for="room-type">نوع الحساب</label>
+                <select id="room-type" name="room-type">
+                    <option value="user">مستخدم</option>
+                    <option value="wensh">ونش</option>
+                </select>
+                <label id="room-id-label" for="user-id">معرف المستخدم</label>
                 <div class="room-controls">
                     <input id="user-id" name="user-id" type="text" inputmode="numeric" autocomplete="off" placeholder="مثال: 12" required>
                     <button type="submit" id="connect-button">اتصال وعرض العروض</button>
@@ -54,6 +59,33 @@
         </section>
         <footer>تحديث مباشر عبر اتصال السيرفر</footer>
     </main>
+
+    <dialog class="payment-modal" id="offer-accepted-modal" aria-labelledby="payment-modal-title">
+        <section class="payment-modal-card">
+            <button class="payment-modal-dismiss" id="payment-modal-dismiss" type="button" aria-label="إغلاق">×</button>
+            <span class="payment-modal-icon" aria-hidden="true">✓</span>
+            <p class="payment-modal-eyebrow">تم قبول العرض</p>
+            <h2 id="payment-modal-title">الونش قبل طلبك</h2>
+            <p class="payment-modal-order" id="payment-modal-order"></p>
+
+            <dl class="payment-breakdown">
+                <div>
+                    <dt>السعر</dt>
+                    <dd id="payment-modal-price">—</dd>
+                </div>
+                <div>
+                    <dt>الرسوم</dt>
+                    <dd id="payment-modal-fees">—</dd>
+                </div>
+                <div class="payment-total">
+                    <dt>الإجمالي</dt>
+                    <dd id="payment-modal-total">—</dd>
+                </div>
+            </dl>
+
+            <button class="payment-modal-confirm" id="payment-modal-confirm" type="button">تمام</button>
+        </section>
+    </dialog>
 
     <script src="/socket.io/socket.io.js"></script>
     <script src="/app.js"></script>

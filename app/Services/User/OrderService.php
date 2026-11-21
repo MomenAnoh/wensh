@@ -36,7 +36,11 @@ class OrderService
 
         $this->offerRepository->createOffer($order, $user, $finalPrice);
 
-        return $order;
+        return $order->load([
+            'carType',
+            'user',
+            'offers',
+        ]);
     }
 
     /**

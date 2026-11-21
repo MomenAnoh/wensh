@@ -21,7 +21,8 @@ body {
 }
 
 button,
-input {
+input,
+select {
     font: inherit;
 }
 
@@ -151,7 +152,8 @@ h1 {
     gap: 10px;
 }
 
-.room-controls input {
+.room-controls input,
+.room-form select {
     width: 100%;
     min-width: 0;
     height: 48px;
@@ -164,6 +166,17 @@ h1 {
     direction: ltr;
     text-align: right;
     transition: border-color 160ms ease, box-shadow 160ms ease;
+}
+
+.room-form select {
+    width: 100%;
+    height: 44px;
+    margin-bottom: 16px;
+    padding: 0 12px;
+    border: 1px solid #dfe6eb;
+    border-radius: 11px;
+    background: #fff;
+    color: #35444e;
 }
 
 .room-controls input:focus {
@@ -286,6 +299,7 @@ h1 {
 
 .offer-main {
     min-width: 0;
+    width: 100%;
 }
 
 .offer-title {
@@ -309,6 +323,153 @@ h1 {
     font-size: 16px;
     font-weight: 800;
     white-space: nowrap;
+}
+
+.offer-details {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 9px 18px;
+    margin: 14px 0 0;
+}
+
+.offer-detail dt {
+    margin-bottom: 2px;
+    color: #89949d;
+    font-size: 10px;
+}
+
+.offer-detail dd {
+    overflow-wrap: anywhere;
+    margin: 0;
+    color: #43515c;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.payment-modal {
+    width: min(100% - 32px, 420px);
+    max-width: 420px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: #182431;
+}
+
+.payment-modal::backdrop {
+    background: rgba(19, 34, 45, 0.52);
+    backdrop-filter: blur(3px);
+}
+
+.payment-modal-card {
+    position: relative;
+    padding: 32px;
+    border: 1px solid #e6ebf0;
+    border-radius: 22px;
+    background: #fff;
+    box-shadow: 0 24px 70px rgba(15, 35, 48, 0.2);
+    text-align: center;
+    animation: appear 220ms ease both;
+}
+
+.payment-modal-dismiss {
+    position: absolute;
+    top: 14px;
+    left: 14px;
+    display: grid;
+    width: 34px;
+    height: 34px;
+    place-items: center;
+    border: 0;
+    border-radius: 10px;
+    background: #f2f5f7;
+    color: #65737d;
+    cursor: pointer;
+    font-size: 22px;
+}
+
+.payment-modal-icon {
+    display: grid;
+    width: 56px;
+    height: 56px;
+    margin: 4px auto 16px;
+    place-items: center;
+    border-radius: 18px;
+    background: #eaf8f2;
+    color: #0d8a63;
+    font-size: 28px;
+    font-weight: 800;
+}
+
+.payment-modal-eyebrow {
+    margin-bottom: 5px;
+    color: #138c6b;
+    font-size: 12px;
+    font-weight: 800;
+}
+
+.payment-modal-card h2 {
+    margin-bottom: 7px;
+    font-size: 21px;
+}
+
+.payment-modal-order {
+    margin-bottom: 22px;
+    color: #7c8992;
+    font-size: 13px;
+}
+
+.payment-breakdown {
+    margin: 0 0 22px;
+    padding: 5px 16px;
+    border: 1px solid #e9eef1;
+    border-radius: 14px;
+    text-align: right;
+}
+
+.payment-breakdown > div {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 11px 0;
+}
+
+.payment-breakdown > div + div {
+    border-top: 1px solid #edf1f3;
+}
+
+.payment-breakdown dt {
+    color: #7c8992;
+    font-size: 12px;
+}
+
+.payment-breakdown dd {
+    margin: 0;
+    color: #35444e;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.payment-breakdown .payment-total dt,
+.payment-breakdown .payment-total dd {
+    color: #087a59;
+    font-size: 15px;
+    font-weight: 800;
+}
+
+.payment-modal-confirm {
+    width: 100%;
+    min-height: 48px;
+    border: 0;
+    border-radius: 12px;
+    background: #138c6b;
+    color: #fff;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 800;
+}
+
+.payment-modal-confirm:hover {
+    background: #0d7558;
 }
 
 footer {
@@ -359,6 +520,14 @@ footer {
         align-items: flex-start;
         flex-direction: column;
         gap: 8px;
+    }
+
+    .offer-details {
+        grid-template-columns: 1fr;
+    }
+
+    .payment-modal-card {
+        padding: 28px 20px 20px;
     }
 }
 
